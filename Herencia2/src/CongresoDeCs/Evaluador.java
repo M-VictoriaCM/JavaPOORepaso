@@ -6,12 +6,12 @@ import java.util.List;
 public class Evaluador {
     private String nombre;
     private List<String> conocimientos;
-    private Trabajo trabajo;
+    private List<Trabajo>trabajoAsignados;
 
     public Evaluador(String nombre) {
         this.nombre = nombre;
         this.conocimientos = new ArrayList<>();
-        this.trabajo = trabajo;
+        this.trabajoAsignados = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -21,44 +21,27 @@ public class Evaluador {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public Trabajo getTrabajo() {
-        return trabajo;
-    }
-
-    public void setTrabajo(Trabajo trabajo) {
-        this.trabajo = trabajo;
-    }
-
-    public boolean tieneConocimiento(String conocimiento) {
+    public boolean tieneConocimientos(String conocimiento){
         return conocimientos.contains(conocimiento);
     }
-
-    public void addConocimiento(String nuevo) {
-        if (!tieneConocimiento(nuevo)) {
-            conocimientos.add(nuevo);
+    public void addConocimiento(String nuevo){
+        if(!tieneConocimientos(nuevo)){
+            this.conocimientos.add(nuevo);
         }
+    }
+    public void deleteConocimiento(String nuevo){
+        this.conocimientos.remove(nuevo);
     }
 
     public boolean esApto(Trabajo trabajo) {
-        if(trabajo.getCategoria().equalsIgnoreCase("Poster")) {
-            for (String palabras : this.conocimientos) {
-                if (trabajo.tienePalabraClave(palabras)) {
-                    return true;
-                }
-            }
-            return  false;
-        }else{
-            for (String palabras : this.conocimientos) {
-                if (!trabajo.tienePalabraClave(palabras)) {
-                    return false;
-                }
-            }
-            return  true;
+        return trabajo.puedeEvaluarlo(this);
+    }
+    public void addTrabajo(Trabajo trabajo){
+        if(esApto(trabajo)){
+            this.trabajoAsignados.add(trabajo);
         }
     }
-    public boolean trabajoAsignado(){
-        return this.getTrabajo() !=null;
+    public int cantidadDeTrabajosAsignados(){
+        return trabajoAsignados.size();
     }
-
 }

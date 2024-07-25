@@ -1,10 +1,8 @@
 package CongresoDeCs;
 
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-        Comite comite = new Comite();
+        Congreso comite = new Congreso();
 
         //Evaluadores
         Evaluador e1 = new Evaluador("Alice");
@@ -13,43 +11,56 @@ public class Main {
 
         //Lista de conocimientos
         e1.addConocimiento("Algoritmo");
-        e1.tieneConocimiento("Lenguaje de programacion");
+        e1.addConocimiento("Lenguaje de programacion");
         e2.addConocimiento("Agentes");
         e2.addConocimiento("Visualizacion");
         e3.addConocimiento("Redes de comunicaciones");
-        e3.addConocimiento("Visualizacion");
-
-        //Agrego el evaluador al comite
-        comite.addEvaluadores(e1);
-        comite.addEvaluadores(e2);
-        comite.addEvaluadores(e3);
 
         //Crear trabajos
         Trabajo t1 = new Trabajo("Articulo");
         Trabajo t2 = new Trabajo("Resumen");
         Trabajo t3 = new Trabajo("Poster");
         Trabajo t4 = new Trabajo("Poster");
-        Trabajo t6 = new Trabajo("Articulo");
+        Trabajo p1 = new Poster("Articulo");
+
+        //Agrego el evaluador al comite
+        comite.addEvaluadores(e1);
+        comite.addEvaluadores(e2);
+        comite.addEvaluadores(e3);
+
+        comite.addTrabajos(t1);
+        comite.addTrabajos(t2);
+        comite.addTrabajos(t3);
+        comite.addTrabajos(t4);
+        comite.addTrabajos(p1);
+        comite.addTrabajos(t1);
+
 
         //Agreso palabras claves
-        t1.addPalabrasClaves("Algoritmo");
-        t1.addPalabrasClaves("Lenguajes de programacion");
-        t2.addPalabrasClaves("Agentes");
-        t2.addPalabrasClaves("Visualizacion");
-        t3.addPalabrasClaves("Redes de comunicaciones");
-        t4.addPalabrasClaves("Biologia");
-        t6.addPalabrasClaves("Algoritmo");
-        t6.addPalabrasClaves("Lenguajes de programacion");
+        t1.addPalabra("Algoritmo");
+        t1.addPalabra("Lenguaje de programacion");
+        t2.addPalabra("Agentes");
+        t2.addPalabra("Visualizacion");
+        t3.addPalabra("Redes de comunicaciones");
+        t4.addPalabra("Biologia");
+
+        p1.addPalabra("Algoritmo");
 
         //Determino si se puede asignarse a cada trabajo
         System.out.println(e1.esApto(t1));
-        System.out.println(e1.esApto(t6));
+        System.out.println(e1.esApto(p1));
+        System.out.println(e1.esApto(t4));
         System.out.println(e2.esApto(t2));
         System.out.println(e3.esApto(t3));
-        System.out.println(e1.esApto(t4));
 
-        System.out.println("cantidad de trabajos: "+ comite.cantidadDetrabajos(e1));
-        System.out.println("cantidad de trabajos: "+ comite.cantidadDetrabajos(e2));
-        System.out.println("cantidad de trabajos: "+ comite.cantidadDetrabajos(e3));
+        e1.addTrabajo(t1);
+        e1.addTrabajo(p1);
+        e1.addTrabajo(t4);
+        e2.addTrabajo(t2);
+        e3.addTrabajo(t3);
+
+
+        System.out.println(comite.cantidadDeTrabajos(e1));
+        System.out.println(comite.cantidadDeTrabajos(e2));
     }
 }

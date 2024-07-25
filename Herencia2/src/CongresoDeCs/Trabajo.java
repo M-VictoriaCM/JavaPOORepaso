@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Trabajo {
     private String categoria;
-    private List<String> palabrasClaves;
+    private List<String>palabrasClaves;
 
     public Trabajo(String categoria) {
         this.categoria = categoria;
@@ -20,21 +20,20 @@ public class Trabajo {
         this.categoria = categoria;
     }
 
-    public boolean tienePalabraClave(String palabra) {
-        return this.palabrasClaves.contains(palabra.toLowerCase());
+    public boolean tienePalabra(String palabra){
+        return this.palabrasClaves.contains(palabra);
+    }
+    public void addPalabra(String nueva){
+        this.palabrasClaves.add(nueva);
     }
 
-    public void addPalabrasClaves(String nueva) {
-        if (!tienePalabraClave(nueva.toLowerCase())) {
-            palabrasClaves.add(nueva.toLowerCase());
+    public boolean puedeEvaluarlo(Evaluador evaluador) {
+        for (String palabra: palabrasClaves){
+            if(!evaluador.tieneConocimientos(palabra)){
+                return false;
+            }
         }
+        return true;
     }
 
-    public void delete(String palabra) {
-        palabrasClaves.remove(palabra.toLowerCase());
-    }
-
-    public boolean puedeAsignarse(Evaluador evaluador) {
-        return evaluador.esApto(this);
-    }
 }
